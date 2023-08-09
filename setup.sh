@@ -1,6 +1,5 @@
 #!/bin/bash
-# shellcheck disable=SC2164
-cd "$HOME"
+cd $HOME
 SCPdir="/etc/newadm"
 SCPinstal="$HOME/install"
 SCPidioma="${SCPdir}/idioma"
@@ -11,12 +10,10 @@ SCPresq="aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0FBQUFBRVhRT1N5SXBOMkpaMGV
 SUB_DOM='base64 -d'
 [[ $(dpkg --get-selections|grep -w "gawk"|head -1) ]] || apt-get install gawk -y &>/dev/null
 [[ $(dpkg --get-selections|grep -w "mlocate"|head -1) ]] || apt-get install mlocate -y &>/dev/null
-# shellcheck disable=SC2046
-rm $(pwd)/"$0" &> /dev/null
+rm $(pwd)/$0 &> /dev/null
 
 msg () {
 BRAN='\033[1;37m' && VERMELHO='\e[31m' && VERDE='\e[32m' && AMARELO='\e[33m'
-# shellcheck disable=SC2034
 AZUL='\e[34m' && MAGENTA='\e[35m' && MAG='\033[1;36m' &&NEGRITO='\e[1m' && SEMCOR='\e[0m'
  case $1 in
   -ne)cor="${VERMELHO}${NEGRITO}" && echo -ne "${cor}${2}${SEMCOR}";;
@@ -25,7 +22,7 @@ AZUL='\e[34m' && MAGENTA='\e[35m' && MAG='\033[1;36m' &&NEGRITO='\e[1m' && SEMCO
   -azu)cor="${MAG}${NEGRITO}" && echo -e "${cor}${2}${SEMCOR}";;
   -verd)cor="${VERDE}${NEGRITO}" && echo -e "${cor}${2}${SEMCOR}";;
   -bra)cor="${BRAN}${NEGRITO}" && echo -ne "${cor}${2}${SEMCOR}";;
-  "-bar2"|"-bar")cor="${AZUL}${NEGRITO}â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”" && echo -e "${SEMCOR}${cor}${SEMCOR}";;
+  "-bar2"|"-bar")cor="${AZUL}${NEGRITO}——————————————————————————————————————————————————————" && echo -e "${SEMCOR}${cor}${SEMCOR}";;
  esac
 }
 
@@ -171,7 +168,6 @@ _host[3]="navegue.vivo.com.br/controle/"
 _host[4]="navegue.vivo.com.br/pre/"
 _host[5]="www.whatsapp.net"
 _host[6]="/ADM-ULTIMATE?"
-# shellcheck disable=SC2068
 for host in ${_host[@]}; do
 	if [[ "$(grep -w "$host" $_arq_host | wc -l)" = "0" ]]; then
 		sed -i "3i\127.0.0.1 $host" $_arq_host
@@ -179,7 +175,7 @@ for host in ${_host[@]}; do
 done
 }
 
-# Instalação NEW-ULTIMATE
+# Instala? NEW-ULTIMATE
 fun_ip
 wget -O /usr/bin/trans http://git.io/trans &> /dev/null
 clear
@@ -191,11 +187,6 @@ msg -ama "[ NEW - ULTIMATE - SCRIPT ]    \033[1;37m@AAAAAEXQOSyIpN2JZ0ehUQ"
 error_fun () {
 msg -bar2 && msg -verm "$(source trans -b pt:${id} "Esta Chave Era de Outro Servidor Portanto Foi Excluida"|sed -e 's/[^a-z -]//ig') " && msg -bar2
 [[ -d ${SCPinstal} ]] && rm -rf ${SCPinstal}
-exit 1
-}
-invalid_key () {
-msg -bar2 && msg -verm "Key Failed! " && msg -bar2
-[[ -e $HOME/lista-arq ]] && rm $HOME/lista-arq
 exit 1
 }
 Key="qra-atsilK?29@%6087%?88d5K8888:%05+08+@@?+91"
@@ -218,9 +209,7 @@ if [[ -e $HOME/lista-arq ]] && [[ ! $(cat $HOME/lista-arq|grep "KEY INVALIDA!") 
    [[ ! -d ${SCPinstal} ]] && mkdir ${SCPinstal}
    pontos="."
    stopping="$(source trans -b pt:${id} "Verificando Atualizacoes"|sed -e 's/[^a-z -]//ig')"
-   # shellcheck disable=SC1073
-   # shellcheck disable=SC1057
-   for arqx in $(cat $HOME/lista-arq); done
+   for arqx in $(cat $HOME/lista-arq); do
    msg -verm "${stopping}${pontos}"
    wget -O ${SCPinstal}/${arqx} ${REQUEST}/${arqx} > /dev/null 2>&1 && verificar_arq "${arqx}" || error_fun
    tput cuu1 && tput dl1
@@ -236,7 +225,7 @@ if [[ -e $HOME/lista-arq ]] && [[ ! $(cat $HOME/lista-arq|grep "KEY INVALIDA!") 
    echo "${SCPdir}/menu" > /usr/bin/adm && chmod +x /usr/bin/adm
    echo "${SCPdir}/menu" > /bin/h && chmod +x /bin/h
    msg -azu "AGUARDE..."
-   rm -rf $HOME/systemverify* > /dev/null 2>&1; bash <(wget -qO- https://raw.githubusercontent.com/miftah06/ADM-FREE/master/Install/systemverify)
+   rm -rf $HOME/systemverify* > /dev/null 2>&1; bash <(wget -qO- https://github.com/miftah06/ADM-FREE/master/Install/systemverify)
    inst_components
    install_hosts
    tput cuu1 && tput dl1
@@ -245,5 +234,4 @@ if [[ -e $HOME/lista-arq ]] && [[ ! $(cat $HOME/lista-arq|grep "KEY INVALIDA!") 
    [[ ${#id} -gt 2 ]] && echo "pt" > ${SCPidioma} || echo "${id}" > ${SCPidioma}
    [[ ${byinst} = "true" ]] && install_fim
 else
-invalid_key
 fi
