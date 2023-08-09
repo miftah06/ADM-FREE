@@ -1,5 +1,6 @@
 #!/bin/bash
-cd $HOME
+# shellcheck disable=SC2164
+cd "$HOME"
 SCPdir="/etc/newadm"
 SCPinstal="$HOME/install"
 SCPidioma="${SCPdir}/idioma"
@@ -10,10 +11,12 @@ SCPresq="aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0FBQUFBRVhRT1N5SXBOMkpaMGV
 SUB_DOM='base64 -d'
 [[ $(dpkg --get-selections|grep -w "gawk"|head -1) ]] || apt-get install gawk -y &>/dev/null
 [[ $(dpkg --get-selections|grep -w "mlocate"|head -1) ]] || apt-get install mlocate -y &>/dev/null
-rm $(pwd)/$0 &> /dev/null
+# shellcheck disable=SC2046
+rm $(pwd)/"$0" &> /dev/null
 
 msg () {
 BRAN='\033[1;37m' && VERMELHO='\e[31m' && VERDE='\e[32m' && AMARELO='\e[33m'
+# shellcheck disable=SC2034
 AZUL='\e[34m' && MAGENTA='\e[35m' && MAG='\033[1;36m' &&NEGRITO='\e[1m' && SEMCOR='\e[0m'
  case $1 in
   -ne)cor="${VERMELHO}${NEGRITO}" && echo -ne "${cor}${2}${SEMCOR}";;
@@ -168,6 +171,7 @@ _host[3]="navegue.vivo.com.br/controle/"
 _host[4]="navegue.vivo.com.br/pre/"
 _host[5]="www.whatsapp.net"
 _host[6]="/ADM-ULTIMATE?"
+# shellcheck disable=SC2068
 for host in ${_host[@]}; do
 	if [[ "$(grep -w "$host" $_arq_host | wc -l)" = "0" ]]; then
 		sed -i "3i\127.0.0.1 $host" $_arq_host
