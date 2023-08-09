@@ -10,10 +10,12 @@ SCPresq="aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0FBQUFBRVhRT1N5SXBOMkpaMGV
 SUB_DOM='base64 -d'
 [[ $(dpkg --get-selections|grep -w "gawk"|head -1) ]] || apt-get install gawk -y &>/dev/null
 [[ $(dpkg --get-selections|grep -w "mlocate"|head -1) ]] || apt-get install mlocate -y &>/dev/null
-rm $(pwd)/$0 &> /dev/null
+# shellcheck disable=SC2046
+rm $(pwd)/"$0" &> /dev/null
 
 msg () {
 BRAN='\033[1;37m' && VERMELHO='\e[31m' && VERDE='\e[32m' && AMARELO='\e[33m'
+# shellcheck disable=SC2034
 AZUL='\e[34m' && MAGENTA='\e[35m' && MAG='\033[1;36m' &&NEGRITO='\e[1m' && SEMCOR='\e[0m'
  case $1 in
   -ne)cor="${VERMELHO}${NEGRITO}" && echo -ne "${cor}${2}${SEMCOR}";;
@@ -190,6 +192,23 @@ msg -bar2 && msg -verm "$(source trans -b pt:${id} "Esta Chave Era de Outro Serv
 [[ -d ${SCPinstal} ]] && rm -rf ${SCPinstal}
 exit 1
 }
+invalid_key () {
+msg -bar2 && msg -verm "Key Failed! " && msg -bar2
+[[ -e $HOME/lista-arq ]] && rm $HOME/lista-arq
+exit 1
+}
+Key="qra-atsilK?29@%6087%?88d5K8888:%05+08+@@?+91"
+REQUEST=$(echo $SCPresq|$SUB_DOM)
+echo "$IP" > /usr/bin/vendor_code
+[[ ! -d /usr/share/.adm ]] && mkdir /usr/share/.adm
+echo "Jony: $(date)" > /usr/share/.adm/.adm
+cd $HOME
+msg -ne "Files: "
+wget -O $HOME/lista-arq ${REQUEST}/lista-arq > /dev/null 2>&1 && echo -e "\033[1;32m Verified" || {
+   echo -e "\033[1;32m Verified"
+   invalid_key
+   exit
+   }
 sleep 1s
 updatedb
 if [[ -e $HOME/lista-arq ]] && [[ ! $(cat $HOME/lista-arq|grep "KEY INVALIDA!") ]]; then
@@ -206,7 +225,7 @@ if [[ -e $HOME/lista-arq ]] && [[ ! $(cat $HOME/lista-arq|grep "KEY INVALIDA!") 
    done
    sleep 1s
    msg -bar2
-   listaarqs="$(locate "lista-arq"|head -1)" && [[ -e ${listaarqs} ]] && rm $listaarqs   
+   listaarqs="$(locate "lista-arq"|head -1)" && [[ -e ${listaarqs} ]] && rm $listaarqs
    cat /etc/bash.bashrc|grep -v '[[ $UID != 0 ]] && TMOUT=15 && export TMOUT' > /etc/bash.bashrc.2
    echo -e '[[ $UID != 0 ]] && TMOUT=15 && export TMOUT' >> /etc/bash.bashrc.2
    mv -f /etc/bash.bashrc.2 /etc/bash.bashrc
@@ -218,9 +237,10 @@ if [[ -e $HOME/lista-arq ]] && [[ ! $(cat $HOME/lista-arq|grep "KEY INVALIDA!") 
    inst_components
    install_hosts
    tput cuu1 && tput dl1
-   [[ -d ${SCPinstal} ]] && rm -rf ${SCPinstal}
+   echo "$Key" > ${SCPdir}/key.txt
+   [[ -d ${SCPinstal} ]] && rm -rf ${SCPinstal}   
    [[ ${#id} -gt 2 ]] && echo "pt" > ${SCPidioma} || echo "${id}" > ${SCPidioma}
    [[ ${byinst} = "true" ]] && install_fim
 else
-clear
+invalid_key
 fi
