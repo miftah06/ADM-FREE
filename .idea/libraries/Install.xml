@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Install">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Install/Source-Code-ADM-Manager_Ultimate.zip!/" />
+      <root url="jar://$PROJECT_DIR$/Install/notfound404.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

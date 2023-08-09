@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="_$_Version">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Install/_$_Version/VERSION r6.3.8.zip!/" />
+      <root url="jar://$PROJECT_DIR$/Install/_$_Version/VERSION r7.1.1.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

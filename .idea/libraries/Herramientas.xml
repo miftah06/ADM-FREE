@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Herramientas">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Install/Herramientas/dados.zip!/" />
+      <root url="jar://$PROJECT_DIR$/Install/Herramientas/painel.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
